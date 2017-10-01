@@ -1,0 +1,23 @@
+package de.perdian.apps.filerenamer.core;
+
+import java.io.File;
+import java.util.List;
+
+import de.perdian.apps.filerenamer.core.types.SourceExpression;
+import de.perdian.apps.filerenamer.core.types.TargetExpression;
+
+public class FileNameComputerFactory {
+
+    public static FileNameComputer createRenamer(List<File> files, SourceExpression sourceExpression, TargetExpression targetExpression) {
+        if (sourceExpression == null || !sourceExpression.isValid() || targetExpression == null || !targetExpression.isValid()) {
+            return (sourceFileName, sourceFileIndex) -> null;
+        } else {
+            FileNameComputerImpl fileNameComputerImpl = new FileNameComputerImpl();
+            fileNameComputerImpl.setFiles(files);
+            fileNameComputerImpl.setSourceExpression(sourceExpression);
+            fileNameComputerImpl.setTargetExpression(targetExpression);
+            return fileNameComputerImpl;
+        }
+    }
+
+}
