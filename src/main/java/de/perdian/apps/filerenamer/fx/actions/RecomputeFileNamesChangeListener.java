@@ -32,7 +32,7 @@ public class RecomputeFileNamesChangeListener implements ChangeListener<Object> 
         List<File> files = this.getFiles().stream().map(FileWrapper::getFile).collect(Collectors.toList());
         FileNameComputer fileNameComputer = FileNameComputerFactory.createRenamer(files, this.getSourceExpression().getValue(), this.getTargetExpression().getValue());
         for (int i=0; i < this.getFiles().size(); i++) {
-            String sourceFileName = this.getFiles().get(i).getSourceFileName().getValue();
+            File sourceFileName = this.getFiles().get(i).getFile();
             String currentTargetFileName = this.getFiles().get(i).getTargetFileName().getValue();
             String newTargetFileName = fileNameComputer.computeTargetFileName(sourceFileName, i);
             if (!StringUtils.equals(currentTargetFileName, newTargetFileName)) {

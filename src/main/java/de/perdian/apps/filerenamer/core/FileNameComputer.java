@@ -1,7 +1,9 @@
 package de.perdian.apps.filerenamer.core;
 
+import java.io.File;
+
 public interface FileNameComputer {
 
-    String computeTargetFileName(String sourceFileName, int sourceFileIndex);
+    String computeTargetFileName(File sourceFile, int sourceFileIndex);
 
 }

@@ -7,21 +7,26 @@ import javafx.beans.property.StringProperty;
 
 public class FileWrapper {
 
-    private StringProperty sourceFileName = null;
     private StringProperty targetFileName = null;
     private File file = null;
 
     public FileWrapper(File file) {
         this.setFile(file);
-        this.setSourceFileName(new SimpleStringProperty(file.getName()));
         this.setTargetFileName(new SimpleStringProperty());
     }
 
-    public StringProperty getSourceFileName() {
-        return this.sourceFileName;
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        } else {
+            return (that instanceof FileWrapper) && this.getFile() != null && this.getFile().equals(((FileWrapper)that).getFile());
+        }
     }
-    private void setSourceFileName(StringProperty sourceFileName) {
-        this.sourceFileName = sourceFileName;
+
+    @Override
+    public int hashCode() {
+        return this.getFile().hashCode();
     }
 
     public StringProperty getTargetFileName() {
@@ -31,6 +36,9 @@ public class FileWrapper {
         this.targetFileName = targetFileName;
     }
 
+    public void updateFile(File newFile) {
+        this.setFile(newFile);
+    }
     public File getFile() {
         return this.file;
     }

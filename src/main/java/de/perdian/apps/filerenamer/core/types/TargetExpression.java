@@ -3,6 +3,11 @@ package de.perdian.apps.filerenamer.core.types;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.expression.Expression;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.ParseException;
+import org.springframework.expression.common.TemplateParserContext;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 /**
  * Representation of the target expression that will be used to compute
@@ -15,6 +20,8 @@ public class TargetExpression {
 
     private String value = null;
     private boolean valid = false;
+    private Expression expression = null;
+    private ParseException parseException = null;
 
     public TargetExpression(String value) {
         if (StringUtils.isEmpty(value)) {
@@ -22,7 +29,14 @@ public class TargetExpression {
             this.setValid(false);
         } else {
             this.setValue(value);
-            this.setValid(true);
+            ExpressionParser expressionParser = new SpelExpressionParser();
+            try {
+                this.setExpression(expressionParser.parseExpression(value, new TemplateParserContext("${", "}")));
+                this.setValid(true);
+            } catch (ParseException e) {
+                this.setValid(false);
+                this.setParseException(e);
+            }
         }
     }
 
@@ -56,6 +70,20 @@ public class TargetExpression {
     }
     private void setValid(boolean valid) {
         this.valid = valid;
+    }
+
+    public Expression getExpression() {
+        return this.expression;
+    }
+    private void setExpression(Expression expression) {
+        this.expression = expression;
+    }
+
+    public ParseException getParseException() {
+        return this.parseException;
+    }
+    private void setParseException(ParseException parseException) {
+        this.parseException = parseException;
     }
 
 }
