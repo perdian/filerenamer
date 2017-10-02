@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import de.perdian.apps.filerenamer.fx.types.FileWrapper;
+import de.perdian.apps.filerenamer.fx.FileWrapper;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 

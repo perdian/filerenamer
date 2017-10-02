@@ -68,7 +68,7 @@ public class ExpressionsPane extends GridPane {
         this.add(targetExpressionInfoLabel, 0, 5, 2, 1);
 
         sourceExpressionField.setText("(.*)");
-        targetExpressionField.setText("${regex.group(1)}");
+        targetExpressionField.setText("${regex(1)}");
 
     }
 

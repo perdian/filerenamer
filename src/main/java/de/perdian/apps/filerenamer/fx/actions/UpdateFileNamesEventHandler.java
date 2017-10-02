@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.perdian.apps.filerenamer.fx.types.FileWrapper;
+import de.perdian.apps.filerenamer.fx.FileWrapper;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -16,9 +16,11 @@ public class UpdateFileNamesEventHandler implements EventHandler<ActionEvent> {
     private static final Logger log = LoggerFactory.getLogger(UpdateFileNamesEventHandler.class);
 
     private List<FileWrapper> fileWrappers = null;
+    private Runnable successCallback = null;
 
-    public UpdateFileNamesEventHandler(List<FileWrapper> fileWrappers) {
+    public UpdateFileNamesEventHandler(List<FileWrapper> fileWrappers, Runnable successCallback) {
         this.setFileWrappers(fileWrappers);
+        this.setSuccessCallback(successCallback);
     }
 
     @Override
@@ -31,10 +33,11 @@ public class UpdateFileNamesEventHandler implements EventHandler<ActionEvent> {
                 if (!sourceFile.equals(targetFile)) {
                     log.info("Updating file '{}' to new file name '{}'", sourceFile.getName(), targetFileName);
                     sourceFile.renameTo(targetFile);
-                    fileWrapper.setFile(targetFile);
+                    fileWrapper.updateFile(targetFile);
                 }
             }
         }
+        this.getSuccessCallback().run();
     }
 
     private List<FileWrapper> getFileWrappers() {
@@ -42,6 +45,13 @@ public class UpdateFileNamesEventHandler implements EventHandler<ActionEvent> {
     }
     private void setFileWrappers(List<FileWrapper> fileWrappers) {
         this.fileWrappers = fileWrappers;
+    }
+
+    public Runnable getSuccessCallback() {
+        return this.successCallback;
+    }
+    public void setSuccessCallback(Runnable successCallback) {
+        this.successCallback = successCallback;
     }
 
 }

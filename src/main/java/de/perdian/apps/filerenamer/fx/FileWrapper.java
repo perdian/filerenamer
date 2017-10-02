@@ -1,4 +1,4 @@
-package de.perdian.apps.filerenamer.fx.types;
+package de.perdian.apps.filerenamer.fx;
 
 import java.io.File;
 
@@ -9,12 +9,14 @@ import javafx.beans.property.StringProperty;
 
 public class FileWrapper {
 
+    private StringProperty sourceFileName = null;
     private StringProperty targetFileName = null;
     private File file = null;
     private ObjectProperty<Throwable> exception = null;
 
     public FileWrapper(File file) {
         this.setFile(file);
+        this.setSourceFileName(new SimpleStringProperty(file.getName()));
         this.setTargetFileName(new SimpleStringProperty());
         this.setException(new SimpleObjectProperty<>());
     }
@@ -33,11 +35,22 @@ public class FileWrapper {
         return this.getFile().hashCode();
     }
 
+    public void updateFile(File file) {
+        this.setFile(file);
+        this.getSourceFileName().setValue(file.getName());
+    }
     public File getFile() {
         return this.file;
     }
-    public void setFile(File file) {
+    private void setFile(File file) {
         this.file = file;
+    }
+
+    public StringProperty getSourceFileName() {
+        return this.sourceFileName;
+    }
+    private void setSourceFileName(StringProperty sourceFileName) {
+        this.sourceFileName = sourceFileName;
     }
 
     public StringProperty getTargetFileName() {

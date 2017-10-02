@@ -7,18 +7,19 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.perdian.apps.filerenamer.fx.FileWrapper;
 import de.perdian.apps.filerenamer.fx.actions.SortFilesEventHandler;
-import de.perdian.apps.filerenamer.fx.types.FileWrapper;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -31,7 +32,7 @@ public class FileWrappersPane extends BorderPane {
 
         TableColumn<FileWrapper, String> currentFileNameColumn = new TableColumn<>("Current file name");
         currentFileNameColumn.setSortable(false);
-        currentFileNameColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getFile().getName()));
+        currentFileNameColumn.setCellValueFactory(p -> p.getValue().getSourceFileName());
 
         TableColumn<FileWrapper, String> newFileNameColumn = new TableColumn<>("New file name");
         newFileNameColumn.setSortable(false);
@@ -40,6 +41,12 @@ public class FileWrappersPane extends BorderPane {
         TableView<FileWrapper> fileWrappersTable = new TableView<>(fileWrappers);
         fileWrappersTable.getColumns().addAll(Arrays.asList(currentFileNameColumn, newFileNameColumn));
         fileWrappersTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        fileWrappersTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        fileWrappersTable.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.DELETE) {
+                fileWrappers.removeAll(fileWrappersTable.getSelectionModel().getSelectedItems());
+            }
+        });
 
         Button sortAscendingButton = new Button(null, new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("icons/16/sort-descending.png"))));
         sortAscendingButton.setOnAction(new SortFilesEventHandler(fileWrappers, 1));

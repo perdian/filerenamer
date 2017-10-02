@@ -1,21 +1,9 @@
 package de.perdian.apps.filerenamer.fx;
 
-import de.perdian.apps.filerenamer.core.types.SourceExpression;
-import de.perdian.apps.filerenamer.core.types.TargetExpression;
-import de.perdian.apps.filerenamer.fx.actions.RecomputeFileNamesChangeListener;
 import de.perdian.apps.filerenamer.fx.actions.UpdateFileNamesEventHandler;
 import de.perdian.apps.filerenamer.fx.panels.ExpressionsPane;
 import de.perdian.apps.filerenamer.fx.panels.FileWrappersPane;
 import de.perdian.apps.filerenamer.fx.panels.HelpPane;
-import de.perdian.apps.filerenamer.fx.types.FileWrapper;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -27,24 +15,15 @@ class FileRenamerPane extends BorderPane {
 
     FileRenamerPane() {
 
-        ObservableList<FileWrapper> fileWrappers = FXCollections.observableArrayList();
-        Property<SourceExpression> sourceExpressionProperty = new SimpleObjectProperty<>();
-        Property<TargetExpression> targetExpressionProperty = new SimpleObjectProperty<>();
-        BooleanProperty filesAvailableProperty = new SimpleBooleanProperty(!fileWrappers.isEmpty());
-        fileWrappers.addListener((ListChangeListener.Change<? extends Object> change) -> filesAvailableProperty.setValue(!fileWrappers.isEmpty()));
+        FileRenamerModel fileRenamerModel = new FileRenamerModel();
 
-        ChangeListener<Object> recomputeFileNamesChangeListener = new RecomputeFileNamesChangeListener(fileWrappers, sourceExpressionProperty, targetExpressionProperty);
-        sourceExpressionProperty.addListener(recomputeFileNamesChangeListener);
-        targetExpressionProperty.addListener(recomputeFileNamesChangeListener);
-        fileWrappers.addListener((ListChangeListener.Change<? extends Object> change) -> recomputeFileNamesChangeListener.changed(null, null, null));
-
-        ExpressionsPane expressionsPane = new ExpressionsPane(sourceExpressionProperty, targetExpressionProperty);
+        ExpressionsPane expressionsPane = new ExpressionsPane(fileRenamerModel.getSourceExpression(), fileRenamerModel.getTargetExpression());
         expressionsPane.setPadding(new Insets(10, 10, 10, 10));
         TitledPane expressionsTitledPane = new TitledPane("Expressions", expressionsPane);
         expressionsTitledPane.setExpanded(true);
         expressionsTitledPane.setCollapsible(false);
 
-        FileWrappersPane fileWrappersPane = new FileWrappersPane(fileWrappers, filesAvailableProperty);
+        FileWrappersPane fileWrappersPane = new FileWrappersPane(fileRenamerModel.getFiles(), fileRenamerModel.getFilesAvailable());
         TitledPane fileWrappersTitledPane = new TitledPane("Files", fileWrappersPane);
         fileWrappersTitledPane.setMaxHeight(Double.MAX_VALUE);
         fileWrappersTitledPane.setCollapsible(false);
@@ -58,9 +37,9 @@ class FileRenamerPane extends BorderPane {
         BorderPane.setMargin(helpTitledPane, new Insets(10, 0, 10, 10));
 
         Button executeButton = new Button("Execute rename");
-        executeButton.setOnAction(new UpdateFileNamesEventHandler(fileWrappers));
+        executeButton.setOnAction(new UpdateFileNamesEventHandler(fileRenamerModel.getFiles(), fileRenamerModel::recomputeTargetFileNames));
         executeButton.setDisable(true);
-        executeButton.disableProperty().bind(filesAvailableProperty.not());
+        executeButton.disableProperty().bind(fileRenamerModel.getFilesAvailable().not());
 
         HBox buttonBox = new HBox(5);
         buttonBox.setAlignment(Pos.CENTER);
