@@ -4,6 +4,6 @@ import java.io.File;
 
 public interface FileNameComputer {
 
-    String computeTargetFileName(File sourceFile, int sourceFileIndex);
+    String computeTargetFileName(File sourceFile) throws Exception;
 
 }

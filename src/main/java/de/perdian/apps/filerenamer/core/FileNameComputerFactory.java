@@ -10,7 +10,7 @@ public class FileNameComputerFactory {
 
     public static FileNameComputer createRenamer(List<File> files, SourceExpression sourceExpression, TargetExpression targetExpression) {
         if (sourceExpression == null || !sourceExpression.isValid() || targetExpression == null || !targetExpression.isValid()) {
-            return (sourceFileName, sourceFileIndex) -> null;
+            return sourceFileName -> null;
         } else {
             FileNameComputerImpl fileNameComputerImpl = new FileNameComputerImpl();
             fileNameComputerImpl.setFiles(files);

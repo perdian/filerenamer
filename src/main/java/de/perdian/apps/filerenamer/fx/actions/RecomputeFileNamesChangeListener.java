@@ -34,9 +34,14 @@ public class RecomputeFileNamesChangeListener implements ChangeListener<Object> 
         for (int i=0; i < this.getFiles().size(); i++) {
             File sourceFileName = this.getFiles().get(i).getFile();
             String currentTargetFileName = this.getFiles().get(i).getTargetFileName().getValue();
-            String newTargetFileName = fileNameComputer.computeTargetFileName(sourceFileName, i);
-            if (!StringUtils.equals(currentTargetFileName, newTargetFileName)) {
-                this.getFiles().get(i).getTargetFileName().setValue(newTargetFileName);
+            try {
+                String newTargetFileName = fileNameComputer.computeTargetFileName(sourceFileName);
+                if (!StringUtils.equals(currentTargetFileName, newTargetFileName)) {
+                    this.getFiles().get(i).getTargetFileName().setValue(newTargetFileName);
+                }
+                this.getFiles().get(i).getException().setValue(null);
+            } catch (Exception e) {
+                this.getFiles().get(i).getException().setValue(e);
             }
         }
     }

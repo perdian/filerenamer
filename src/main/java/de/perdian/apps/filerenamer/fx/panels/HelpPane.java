@@ -11,14 +11,11 @@ public class HelpPane extends GridPane {
         Label titleLabel = new Label("Target expressions");
 
         StringBuilder content = new StringBuilder();
-        content.append("file.index() : Number\n");
-        content.append("file.lastModified() : Instant\n");
-        content.append("file.name() : String\n");
-        content.append("format.date(<Instant>, <String>) : String\n");
-        content.append("format.number(<Number>) : String\n");
-        content.append("format.toLowercase(<String>) : String\n");
-        content.append("format.toUppercase(<String>) : String\n");
-        content.append("regex.group(<Number>) : String\n");
+        content.append("index : Number\n");
+        content.append("index(Number minDigits) : Number\n");
+        content.append("lastModified : String\n");
+        content.append("lastModified(String pattern) : String\n");
+        content.append("regex(Number groupIndex) : String\n");
         Label contentLabel = new Label(content.toString());
         contentLabel.setFont(Font.font("Monospaced", 12d));
 

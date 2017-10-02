@@ -31,7 +31,7 @@ public class UpdateFileNamesEventHandler implements EventHandler<ActionEvent> {
                 if (!sourceFile.equals(targetFile)) {
                     log.info("Updating file '{}' to new file name '{}'", sourceFile.getName(), targetFileName);
                     sourceFile.renameTo(targetFile);
-                    fileWrapper.updateFile(targetFile);
+                    fileWrapper.setFile(targetFile);
                 }
             }
         }

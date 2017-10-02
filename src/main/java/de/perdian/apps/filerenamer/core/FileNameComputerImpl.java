@@ -7,9 +7,6 @@ import org.springframework.expression.EvaluationException;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 import de.perdian.apps.filerenamer.core.expression.ExpressionRoot;
-import de.perdian.apps.filerenamer.core.expression.helpers.FileHelper;
-import de.perdian.apps.filerenamer.core.expression.helpers.FormatHelper;
-import de.perdian.apps.filerenamer.core.expression.helpers.RegexHelper;
 import de.perdian.apps.filerenamer.core.types.SourceExpression;
 import de.perdian.apps.filerenamer.core.types.TargetExpression;
 
@@ -20,27 +17,18 @@ class FileNameComputerImpl implements FileNameComputer {
     private TargetExpression targetExpression = null;
 
     @Override
-    public String computeTargetFileName(File sourceFile, int sourceFileIndex) {
+    public String computeTargetFileName(File sourceFile) {
         if (this.getTargetExpression().getExpression() == null) {
             return null;
         } else {
             try {
-                ExpressionRoot expressionRoot = this.createExpressionRoot(sourceFile, sourceFileIndex);
+                ExpressionRoot expressionRoot = new ExpressionRoot(sourceFile, this.getFiles(), this.getSourceExpression());
                 StandardEvaluationContext evaluationContext = new StandardEvaluationContext(expressionRoot);
-                return this.getTargetExpression().getExpression().getValue(evaluationContext, String.class);
+                return this.getTargetExpression().getExpression().getValue(evaluationContext, String.class).trim();
             } catch (EvaluationException e) {
                 return null;
             }
         }
-    }
-
-    private ExpressionRoot createExpressionRoot(File sourceFile, int sourceFileIndex) {
-        ExpressionRoot expressionRoot = new ExpressionRoot();
-        expressionRoot.setRegex(new RegexHelper(this.getSourceExpression().getRegexPattern(), sourceFile.getName()));
-        expressionRoot.setFile(new FileHelper(sourceFile, sourceFileIndex));
-        expressionRoot.setFiles(this.getFiles());
-        expressionRoot.setFormat(new FormatHelper(this.getFiles().size()));
-        return expressionRoot;
     }
 
     List<File> getFiles() {
