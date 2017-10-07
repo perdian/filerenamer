@@ -8,16 +8,25 @@ import de.perdian.apps.filerenamer.core.types.TargetExpression;
 
 public class FileNameComputerFactory {
 
-    public static FileNameComputer createRenamer(List<File> files, SourceExpression sourceExpression, TargetExpression targetExpression) {
+    private FileNameComputerHelper helper = new FileNameComputerHelper();
+
+    public FileNameComputer createRenamer(List<File> files, SourceExpression sourceExpression, TargetExpression targetExpression) {
         if (sourceExpression == null || !sourceExpression.isValid() || targetExpression == null || !targetExpression.isValid()) {
             return sourceFileName -> null;
         } else {
-            FileNameComputerImpl fileNameComputerImpl = new FileNameComputerImpl();
+            FileNameComputerImpl fileNameComputerImpl = new FileNameComputerImpl(this.getHelper());
             fileNameComputerImpl.setFiles(files);
             fileNameComputerImpl.setSourceExpression(sourceExpression);
             fileNameComputerImpl.setTargetExpression(targetExpression);
             return fileNameComputerImpl;
         }
+    }
+
+    FileNameComputerHelper getHelper() {
+        return this.helper;
+    }
+    void setHelper(FileNameComputerHelper helper) {
+        this.helper = helper;
     }
 
 }

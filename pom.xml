@@ -26,6 +26,7 @@
     <properties>
         <commons-lang3.version>3.5</commons-lang3.version>
         <logback.version>1.2.3</logback.version>
+        <metadata-extractor.version>2.10.1</metadata-extractor.version>
         <slf4j.version>1.7.25</slf4j.version>
         <spring.version>5.0.0.RELEASE</spring.version>
     </properties>
@@ -50,6 +51,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-expression</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.drewnoakes</groupId>
+            <artifactId>metadata-extractor</artifactId>
+            <version>${metadata-extractor.version}</version>
         </dependency>
     </dependencies>
 

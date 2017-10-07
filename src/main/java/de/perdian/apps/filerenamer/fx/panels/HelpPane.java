@@ -16,6 +16,10 @@ public class HelpPane extends GridPane {
         content.append("lastModified : String\n");
         content.append("lastModified(String pattern) : String\n");
         content.append("regex(Number groupIndex) : String\n");
+        content.append("exifDate() : String\n");
+        content.append("exifDate(String pattern) : String\n");
+        content.append("exifTime() : String\n");
+        content.append("exifTime(String pattern) : String\n");
         Label contentLabel = new Label(content.toString());
         contentLabel.setFont(Font.font("Monospaced", 12d));
 
