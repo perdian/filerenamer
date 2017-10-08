@@ -2,6 +2,8 @@
 
 Small application to easily rename files into a common pattern.
 
+![Application](docs/screenshots/screenshot.jpg)
+
 ## Building the application
 
 ### Generic build
