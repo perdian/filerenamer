@@ -2,7 +2,7 @@
 
 Small application to easily rename files into a common pattern.
 
-![Application](docs/screenshots/screenshot.jpg)
+![Application](docs/screenshots/screenshot.png)
 
 ## Building the application
 
