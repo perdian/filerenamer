@@ -1,6 +1,7 @@
 package de.perdian.apps.filerenamer.core;
 
 import java.io.File;
+import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.Instant;
@@ -9,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.function.BiFunction;
 import java.util.regex.Matcher;
 
@@ -58,10 +60,12 @@ class FileNameComputerImpl implements FileNameComputer {
 
         private File sourceFile = null;
         private Matcher regexMatcher = null;
+        private Random random = null;
 
         ExpressionRoot(File sourceFile, Matcher regexMatcher) {
             this.setSourceFile(sourceFile);
             this.setRegexMatcher(regexMatcher);
+            this.setRandom(new SecureRandom());
         }
 
         public String regex(int groupIndex) {
@@ -83,6 +87,18 @@ class FileNameComputerImpl implements FileNameComputer {
             } else {
                 return this.formatNumber(fileIndex + 1, minDigits);
             }
+        }
+
+        public String random() {
+            return this.random((int)Math.ceil(Math.log10(FileNameComputerImpl.this.getFiles().size())));
+        }
+
+        public String random(int numberOfDigits) {
+            StringBuilder result = new StringBuilder();
+            for (int i=0; i < numberOfDigits; i++) {
+                result.append("0123456789".charAt(this.getRandom().nextInt(10)));
+            }
+            return result.toString();
         }
 
         public String getLastModified() {
@@ -159,6 +175,13 @@ class FileNameComputerImpl implements FileNameComputer {
         }
         private void setRegexMatcher(Matcher regexMatcher) {
             this.regexMatcher = regexMatcher;
+        }
+
+        private Random getRandom() {
+            return this.random;
+        }
+        private void setRandom(Random random) {
+            this.random = random;
         }
 
     }
