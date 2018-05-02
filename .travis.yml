@@ -2,5 +2,6 @@ language: java
 script:
   - mvn clean package -B
 sudo: false
+jdk: oraclejdk9
 notifications:
   email: false
