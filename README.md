@@ -1,5 +1,7 @@
 # File Renamer
 
+[![Travis build status](https://api.travis-ci.org/perdian/filerenamer.svg)](https://travis-ci.org/perdian/filerenamer)
+
 Small application to easily rename files into a common pattern.
 
 ![Application](docs/screenshots/screenshot-new.png)
