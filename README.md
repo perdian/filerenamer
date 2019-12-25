@@ -27,3 +27,11 @@ On macOS a simplified build that directly generated a DMG archive from which the
     $ cd filerenamer
     $ mvn clean package -Pmacos-bundle
     $ open target/File\ Renamer.dmg
+
+## Authors
+
+- [**Christian Seifert**](http://www.perdian.de)
+
+## License
+
+This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.

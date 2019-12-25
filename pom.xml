@@ -9,6 +9,14 @@
     <description>File Renamer</description>
     <url>https://github.com/perdian/filerenamer</url>
 
+    <licenses>
+        <license>
+            <name>Apache License Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
     <scm>
         <url>https://github.com/perdian/filerenamer</url>
         <connection>scm:git:https://github.com/perdian/filerenamer.git</connection>
@@ -24,14 +32,21 @@
     </developers>
 
     <properties>
-        <commons-lang3.version>3.7</commons-lang3.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
+        <java.version>13</java.version>
+        <javafx.version>13.0.1</javafx.version>
         <logback.version>1.2.3</logback.version>
-        <metadata-extractor.version>2.11.0</metadata-extractor.version>
-        <slf4j.version>1.7.25</slf4j.version>
-        <spring.version>5.0.4.RELEASE</spring.version>
+        <metadata-extractor.version>2.12.0</metadata-extractor.version>
+        <slf4j.version>1.7.30</slf4j.version>
+        <spring.version>5.2.2.RELEASE</spring.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -64,16 +79,16 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.8.1</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
-                    <source>9</source>
-                    <target>9</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>3.1.0</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                 </configuration>
@@ -81,7 +96,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>3.2.0</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -93,7 +108,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.2.1</version>
                 <configuration>
                     <finalName>filerenamer</finalName>
                 </configuration>
@@ -113,29 +128,21 @@
         <profile>
             <id>macos-bundle</id>
             <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                    </resource>
-                    <resource>
-                        <directory>src/bundle/macos/resources</directory>
-                    </resource>
-                </resources>
                 <plugins>
                     <plugin>
-                        <groupId>sh.tak.appbundler</groupId>
-                        <artifactId>appbundle-maven-plugin</artifactId>
-                        <version>1.2.0</version>
+                        <groupId>de.perdian.maven.plugins</groupId>
+                        <artifactId>macosappbundler-maven-plugin</artifactId>
+                        <version>1.5.0</version>
                         <configuration>
-                            <mainClass>de.perdian.apps.filerenamer.fx.FileRenamerApplication</mainClass>
-                            <generateDiskImageFile>true</generateDiskImageFile>
-                            <jvmVersion>9+</jvmVersion>
-                            <iconFile>filerenamer.icns</iconFile>
-                            <additionalResources>
-                                <additionalResource>
-                                    <directory>${project.basedir}/src/bundle/macos/distribution</directory>
-                                </additionalResource>
-                            </additionalResources>
+                            <plist>
+                                <CFBundleIconFile>src/bundle/macos/resources/filerenamer.icns</CFBundleIconFile>
+                                <JVMMainClassName>de.perdian.apps.filerenamer.fx.FileRenamerLauncher</JVMMainClassName>
+                                <JVMVersion>${java.version}+</JVMVersion>
+                                <JVMOptions>
+                                    <string>-Dapple.laf.useScreenMenuBar=true</string>
+                                    <string>-Xdock:name=${project.name}</string>
+                                </JVMOptions>
+                            </plist>
                         </configuration>
                         <executions>
                             <execution>
