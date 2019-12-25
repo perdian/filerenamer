@@ -11,7 +11,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * Representation of a source regex expression that is used to determine
  * how to interpret the original file names
  *
- * @author Christian Robert
+ * @author Christian Seifert
  */
 
 public class SourceExpression {

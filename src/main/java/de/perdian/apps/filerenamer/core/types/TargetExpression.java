@@ -13,7 +13,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
  * Representation of the target expression that will be used to compute
  * the new names of the files.
  *
- * @author Christian Robert
+ * @author Christian Seifert
  */
 
 public class TargetExpression {
