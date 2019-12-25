@@ -1,6 +1,7 @@
 # File Renamer
 
 [![Travis build status](https://api.travis-ci.org/perdian/filerenamer.svg)](https://travis-ci.org/perdian/filerenamer)
+[![License](http://img.shields.io/:license-apache-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 Small application to easily rename files into a common pattern.
 
