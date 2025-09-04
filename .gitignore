@@ -1,6 +1,8 @@
 /.classpath
+/.idea
 /.project
 /.settings
 /target
 /dependency-reduced-pom.xml
+/hs_err_*
 .DS_Store

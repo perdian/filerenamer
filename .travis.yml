@@ -1,7 +1,0 @@
-language: java
-script:
-  - mvn clean package -B
-sudo: false
-jdk: oraclejdk13
-notifications:
-  email: false

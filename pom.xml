@@ -32,21 +32,19 @@
     </developers>
 
     <properties>
-        <commons-lang3.version>3.9</commons-lang3.version>
-        <java.version>13</java.version>
-        <javafx.version>13.0.1</javafx.version>
-        <logback.version>1.2.3</logback.version>
-        <metadata-extractor.version>2.18.0</metadata-extractor.version>
-        <slf4j.version>1.7.30</slf4j.version>
-        <spring.version>5.2.21.RELEASE</spring.version>
+        <commons-lang3.version>3.18.0</commons-lang3.version>
+        <hamcrest.version>3.0</hamcrest.version>
+        <ikonli.version>12.4.0</ikonli.version>
+        <java.version>24</java.version>
+        <javafx.version>24.0.2</javafx.version>
+        <junit-jupiter.version>5.13.4</junit-jupiter.version>
+        <logback.version>1.5.18</logback.version>
+        <metadata-extractor.version>2.19.0</metadata-extractor.version>
+        <slf4j.version>2.0.17</slf4j.version>
+        <spring.version>6.2.10</spring.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>${javafx.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -72,6 +70,36 @@
             <artifactId>metadata-extractor</artifactId>
             <version>${metadata-extractor.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kordamp.ikonli</groupId>
+            <artifactId>ikonli-javafx</artifactId>
+            <version>${ikonli.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kordamp.ikonli</groupId>
+            <artifactId>ikonli-remixicon-pack</artifactId>
+            <version>${ikonli.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>${hamcrest.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -79,7 +107,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.14.0</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                     <source>${java.version}</source>
@@ -88,7 +116,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.3.1</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                 </configuration>
@@ -96,7 +124,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.4.2</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -108,7 +136,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>3.6.0</version>
                 <configuration>
                     <finalName>filerenamer</finalName>
                 </configuration>
@@ -132,7 +160,7 @@
                     <plugin>
                         <groupId>de.perdian.maven.plugins</groupId>
                         <artifactId>macosappbundler-maven-plugin</artifactId>
-                        <version>1.5.0</version>
+                        <version>1.21.1</version>
                         <configuration>
                             <plist>
                                 <CFBundleIconFile>src/bundle/macos/resources/filerenamer.icns</CFBundleIconFile>
